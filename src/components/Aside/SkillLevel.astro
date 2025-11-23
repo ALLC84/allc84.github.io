@@ -9,46 +9,68 @@ interface Props {
 const { skills } = Astro.props;
 ---
 
-{
-  skills.map(skill=> (
-    <div class="skill">
-      <p class="name">{ skill.name }</p>
-      <div>
-        {[1, 2, 3, 4, 5].map(i => (
-          <span class:list={[
-            'track', 
-            {'track-fault': i > skill.level}
-          ]} />
-        ))}  
+<div class="skills-container">
+  {
+    skills.map(skill => (
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">{skill.name}</span>
+          <span class="skill-level-text">{skill.level}/5</span>
+        </div>
+        <div class="progress-track">
+          <div 
+            class="progress-fill" 
+            style={`width: ${(skill.level / 5) * 100}%`}
+          ></div>
+        </div>
       </div>
-    </div>
-  ))
-}
+    ))
+  }
+</div>
 
 <style>
-.skill {
-  display: flex;
-  align-items: center;
-
-  & .name {
-    flex: 1;
-    color: var(--color-light-gray);
-    font-size: 0.9rem;
-    font-weight: 600;
+  .skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
   }
 
-  & .track {
-    text-align: right;
-    width: 0.9rem;
-    height: 0.9rem;
-    border-radius: 50%;
-    margin-left: 0.5rem;
-    display: inline-block;
-    background-color: var(--color-gray);
-
-    + .track-fault {
-      background-color: var(--color-dark-gray);
-    }
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
-}
+
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-sm);
+  }
+
+  .skill-name {
+    color: var(--text-muted);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .skill-level-text {
+    color: var(--text-muted);
+    font-size: 10px;
+    opacity: 0.5;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 10px;
+    transition: width 1s ease-out;
+  }
 </style>

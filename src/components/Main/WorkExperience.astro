@@ -1,6 +1,4 @@
 ---
-import TitleSection from '@components/TitleSection/index.astro';
-import PartingLine from '@components/PartingLine/index.astro';
 import SectionInformation from './common/SectionInformation/index.astro'
 
 interface SectionWorkExperience {
@@ -18,26 +16,26 @@ const { data } = Astro.props;
 const nameSection = 'Experiencia Laboral';
 ---
 
-<section>
-  <header class="header-section">
-    <TitleSection
-      tag="h3"
-      text={nameSection}
-      size={1.8}
-      weight={600}
-    />
-    <PartingLine weight={0.15} />
+<section class="bento-card">
+  <header class="card-header">
+    <h3 class="card-title">{nameSection}</h3>
   </header>
-  <div>
+  <div class="card-content">
     <SectionInformation data={data} />
   </div>
 </section>
 
 <style>
-  .header-section {
-    display: flex; 
-    align-items: center; 
-    gap: 20px; 
-    margin-top: 30px;
+  .card-header {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .card-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-secondary);
+    letter-spacing: -0.01em;
   }
 </style>

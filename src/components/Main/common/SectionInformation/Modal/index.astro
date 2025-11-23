@@ -7,87 +7,187 @@ interface Props {
 
 const { url, alt } = Astro.props;
 const TEXT_BUTTON = {
-  less: 'Ocultar',
-  show: 'Mostrar',
+  show: 'Ver Título',
 };
 ---
 
-<div class="modal">
-  <div id={`button-${url.src}`} class="button">{TEXT_BUTTON.show}</div>
-  <div class="wrapper-img">
-    <Image id={`img-${url.src}`} src={url} alt={alt} class="img fadeIn no-display"/>
+<div class="modal-component">
+  <button id={`trigger-${url.src}`} class="trigger-btn" data-img-src={url.src} data-img-alt={alt}>
+    {TEXT_BUTTON.show}
+  </button>
+  
+  <!-- Hidden source for the image -->
+  <div id={`source-${url.src}`} style="display: none;">
+    <Image src={url} alt={alt} class="portal-img" />
   </div>
 </div>
 
-<script define:vars={{url, TEXT_BUTTON}}>
-  const button = document.getElementById(`button-${url.src}`);
-  const img = document.getElementById(`img-${url.src}`);
-
-  const showModal = () => {
-    img.classList.toggle('no-display')
-
-    if (button.textContent === TEXT_BUTTON.less) {
-      button.textContent = TEXT_BUTTON.show;
-    } else {
-      button.textContent = TEXT_BUTTON.less;
-    }
-  };
-  if (button) {
-    button.addEventListener('click', showModal);
+<script>
+  // Global Portal Container
+  let portalContainer = document.getElementById('modal-portal');
+  if (!portalContainer) {
+    portalContainer = document.createElement('div');
+    portalContainer.id = 'modal-portal';
+    document.body.appendChild(portalContainer);
   }
+
+  // Handle clicks
+  document.querySelectorAll('.trigger-btn').forEach(element => {
+    const btn = element as HTMLElement;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const imgSrc = btn.dataset.imgSrc;
+      const sourceImg = document.getElementById(`source-${imgSrc}`).firstElementChild;
+      
+      if (sourceImg && portalContainer) {
+        // Clear previous content
+        portalContainer.innerHTML = '';
+        
+        // Create wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'portal-wrapper';
+        
+        // Clone image
+        const imgClone = sourceImg.cloneNode(true);
+        wrapper.appendChild(imgClone);
+        
+        // Add close button
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'portal-close';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.onclick = () => {
+            portalContainer.classList.remove('active');
+            setTimeout(() => portalContainer.innerHTML = '', 300);
+        };
+        wrapper.appendChild(closeBtn);
+        
+        // Add backdrop click to close
+        const backdrop = document.createElement('div');
+        backdrop.className = 'portal-backdrop';
+        backdrop.onclick = () => {
+            portalContainer.classList.remove('active');
+            setTimeout(() => portalContainer.innerHTML = '', 300);
+        };
+        
+        portalContainer.appendChild(backdrop);
+        portalContainer.appendChild(wrapper);
+        
+        // Activate
+        requestAnimationFrame(() => {
+            portalContainer.classList.add('active');
+        });
+      }
+    });
+  });
 </script>
 
-<style>
-  .modal {
-    & .img {
-      position: absolute;
-      z-index: 999999;
-      max-width: 100%;
-      top: 1.6rem;
-      left: 0;
-      transition: opacity .5s ease-in-out;
-    }
-
-    & .img.no-display {
-      display: none;
-    }
-
-    & .button {
-      cursor: pointer;
-      font-size: 0.8rem;
-      padding: 0.1rem 0.5rem;
-      background: var(--color-bg-sidebar);
-      border-radius: 1rem;
-      color: var(--color-light-gray);
-      margin-left: 0.5rem;
-    }
-    & .button:hover {
-      background: var(--color-button-hover);
-    }
+<style is:global>
+  /* Portal Styles (Global) */
+  #modal-portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999; /* Extremely high z-index */
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  @media (min-width: 768px) {
-    .modal {
-      position: relative;
-
-       & .img {
-        max-width: 15rem;
-        height: auto;
-        left: 0.5rem;
-      }
-    }
+  #modal-portal.active {
+    pointer-events: auto;
   }
 
-  .fadeIn {
-    animation: fadeIn .5s ease-in-out forwards;
+  .portal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  #modal-portal.active .portal-backdrop {
+    opacity: 1;
+  }
+
+  .portal-wrapper {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+    max-width: 90vw;
+  }
+
+  #modal-portal.active .portal-wrapper {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .portal-img {
+    display: block;
+    max-width: 18.75rem; /* Increased by 25% from 15rem */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+  }
+
+  .portal-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .portal-close:hover {
+    background: var(--accent-secondary);
   }
 </style>
+
+<style>
+  /* Component Styles */
+  .modal-component {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .trigger-btn {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .trigger-btn:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+  }
+</style>
+
+
+

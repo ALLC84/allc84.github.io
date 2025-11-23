@@ -1,6 +1,4 @@
 ---
-import TitleSection from '@components/TitleSection/index.astro';
-import PartingLine from '@components/PartingLine/index.astro';
 import Avatar from './Avatar.astro';
 import Contact from './Contact.astro';
 import SkillLevel from './SkillLevel.astro';
@@ -8,9 +6,6 @@ import SkillLevel from './SkillLevel.astro';
 import skillsData from '@data/skills.json';
 import skillsTechData from '@data/skillsTech.json';
 import languageData from '@data/language.json';
-
-const colorText = '#a0aec0',
-  titleMarginTop = 1.8;
 
 const dataContent = [
   {
@@ -28,47 +23,48 @@ const dataContent = [
 ];
 ---
 
-<section>
-  <!--
-  |-----------------------------------------------
-  |  IMAGEN
-  |-----------------------------------------------
-  -->
+<section class="profile-content">
+  <!-- Avatar -->
   <Avatar />
 
-  <!--
-  |-----------------------------------------------
-  |  CONTACTO
-  |-----------------------------------------------
-  -->
-  <TitleSection
-    text="CONTACTO"
-    color={colorText}
-    mt={titleMarginTop}
-    weight={600}
-    tag="h4"
-  />
-  <PartingLine weight={0.15} width={40}/>
-  <Contact />
+  <!-- Contact -->
+  <div class="section-group">
+    <h3 class="section-title">CONTACTO</h3>
+    <Contact />
+  </div>
+
+  <!-- Skills Sections -->
+  {
+    dataContent.map(section => (
+      <div class="section-group">
+        <h3 class="section-title">{section.name}</h3>
+        <SkillLevel skills={section.skills} />
+      </div>
+    ))
+  }
 </section>
 
-<!--
-|-----------------------------------------------
-|  HABILIDADES, TECNOLOGÍAS, LENGUAJES
-|-----------------------------------------------
--->
-{
-  dataContent.map(section => (
-    <section>
-      <TitleSection
-        text={section.name}
-        color={colorText}
-        mt={titleMarginTop}
-        weight={600}
-        tag="h4"
-      />
-      <PartingLine weight={0.15} width={40}/>
-      <SkillLevel skills={section.skills} />
-    </section>
-  ))
-}
+<style>
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .section-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .section-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--space-xs);
+  }
+</style>

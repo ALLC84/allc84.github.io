@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 import '@styles/variables.css';
+import '@styles/reset.css';
 
 interface Props {
   title: string;
@@ -19,24 +20,41 @@ const { title } = Astro.props;
     />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ViewTransitions />
   </head>
   <body>
-    <div class="layout fadeIn">
-      <nav class="nav">
+    <div class="background-gradient"></div>
+    
+    <div class="layout-grid">
+      <!-- Navigation / Dock -->
+      <nav class="nav-area">
         <slot name="nav" />
       </nav>
-      <aside class="aside">
-        <slot name="aside" />
-      </aside>
-      <main class="right-section">
-        <slot name="header" />
-        <section class="main-content">
+
+      <!-- Main Content Grid -->
+      <main class="content-area">
+        <!-- Profile / Aside Section -->
+        <aside class="profile-section bento-card">
+          <slot name="aside" />
+        </aside>
+
+        <!-- Header / Intro Section -->
+        <header class="header-section bento-card">
+          <slot name="header" />
+        </header>
+
+        <!-- Main Details Section -->
+        <section class="details-section">
           <slot name="main"/>
         </section>
-        <footer class="footer">
+        
+        <!-- Footer -->
+        <footer class="footer-section">
           <slot name="footer" />
         </footer>
       </main>
@@ -45,72 +63,103 @@ const { title } = Astro.props;
 </html>
 
 <style>
-  .layout {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    font-size: var(--font-size-content);
+  /* Background Effect */
+  .background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.15), transparent 25%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Main Layout Grid */
+  .layout-grid {
     max-width: var(--layout-max-width);
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: calc(var(--padding-content) * 2);
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-
-  .fadeIn {
-    animation: fadeIn 1s ease-in-out forwards;
-  }
-
-  .aside,
-  .right-section {
-    padding: var(--padding-content);
-  }
-  .nav {
-    min-width: 100%;
-    padding: calc(var(--padding-content) / 2) var(--padding-content);
-  }
-
-  .aside {
-    flex-grow: 1;
-    flex-basis: calc(30% - calc(var(--padding-content) * 2));
-    min-width: var(--aside-min-width);
-    background-color: var(--color-bg-sidebar);
-  }
-
-  .right-section {
+    margin: 0 auto;
+    padding: var(--space-md);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    flex-basis: calc(70% - calc(var(--padding-content) * 4));
-    background-color: var(--color-bg-content);
+    gap: var(--space-lg);
   }
 
-  .main-content {
-    flex: 1
+  /* Content Area Grid */
+  .content-area {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    width: 100%;
   }
 
-  .footer {
-    padding-top: var(--padding-content);
+  /* Bento Card Style */
+  :global(.bento-card) {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-border-radius);
+    padding: var(--space-lg);
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
   }
 
-  @media (min-width: 896px) {
-    .aside {
-      border-top-left-radius: var(--layout-border-radius);
-      border-bottom-left-radius: var(--layout-border-radius);
+  :global(.bento-card:hover) {
+    border-color: var(--border-color-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Grid */
+  @media (min-width: 768px) {
+    .content-area {
+      grid-template-columns: 300px 1fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: 
+        "profile header"
+        "profile details"
+        "profile footer";
     }
-    .right-section {
-      border-top-right-radius: var(--layout-border-radius);
-      border-bottom-right-radius: var(--layout-border-radius);
+
+    .profile-section {
+      grid-area: profile;
+      position: sticky;
+      top: var(--space-md);
+      height: fit-content;
+      max-height: calc(100vh - var(--space-lg));
+      overflow-y: auto;
+    }
+
+    .header-section {
+      grid-area: header;
+    }
+
+    .details-section {
+      grid-area: details;
+    }
+
+    .footer-section {
+      grid-area: footer;
     }
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  /* Navigation Area */
+  .nav-area {
+    position: fixed;
+    bottom: var(--space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: auto;
+  }
+  
+  @media (min-width: 1024px) {
+     .layout-grid {
+        padding: var(--space-lg);
+     }
   }
 </style>
+

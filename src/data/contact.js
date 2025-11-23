@@ -6,7 +6,7 @@ export default {
   name: 'Alejandro LLorente',
   profession: 'Desarrollador Frontend',
   about:
-    'Desarrollador web con experiencia utilizando Vue y React. Actualmente ocupo un puesto de desarrollador fontend en Conisel15,  Madrid, trabajando en proyectos para Ald Automotive.',
+    'Desarrollador Frontend especializado en crear experiencias digitales de alto impacto. Experto en Vue.js y React, con enfoque en el sector automoción: desarrollo de plataformas de renting online, showrooms interactivos y herramientas de gestión de campañas. Apasionado por el rendimiento web y el diseño UI/UX.',
   image: imageAvatar,
   mail: {
     email: 'alejandro22cuba@hotmail.com',

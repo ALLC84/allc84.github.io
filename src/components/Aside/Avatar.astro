@@ -3,28 +3,68 @@ import { Image } from 'astro:assets';
 import contactData from '@data/contact.js';
 ---
 
-<section class="wrapper">
-  <Image
-    class="avatar"
-    src={contactData.image}
-    alt={`Avatar ${contactData.name}`}
-    width="200"
-    height="200"
-  />
-</section>
+<div class="avatar-container">
+  <div class="avatar-wrapper">
+    <Image
+      class="avatar"
+      src={contactData.image}
+      alt={`Avatar ${contactData.name}`}
+      width="200"
+      height="200"
+    />
+  </div>
+  <div class="glow"></div>
+</div>
 
 <style>
-  .wrapper {
-    border: 2px solid #c4c4c4;
-    border-radius: 100%;
-    vertical-align: middle;
-    margin: calc(var(--padding-content) / 1.5) auto;
+  .avatar-container {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto var(--space-lg);
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     overflow: hidden;
-    width: 200px;
-    height: 200px;
-    
-    & .avatar {
-      max-width: 100%;
-    }
+    padding: 4px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    z-index: 2;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid var(--bg-card); /* Inner border to separate image from gradient */
+    background-color: var(--bg-card);
+    display: block;
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    filter: blur(40px);
+    opacity: 0.4;
+    z-index: 1;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
   }
 </style>
+
+

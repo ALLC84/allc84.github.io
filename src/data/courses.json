@@ -1,32 +1,42 @@
 [
   {
-    "title": "VueJS",
-    "subtitle": "Udemy [ Ignacio ( Bluuweb ) ]",
+    "title": "Vue.js y TypeScript: Tu guía completa",
+    "subtitle": "Udemy - Fernando Herrera",
+    "year": 2021
+  },
+  {
+    "title": "Patrones de Diseño en JavaScript y Node.js",
+    "subtitle": "Udemy - Nicolas Schurmann",
+    "year": 2021
+  },
+  {
+    "title": "Desarrollo Profesional con Vue.js",
+    "subtitle": "Udemy - Ignacio (Bluuweb)",
     "year": 2020
   },
   {
-    "title": "React | React-Native | Redux | ECMAScript 6 | TypeScript | Angular",
-    "subtitle": "Udemy [ Fernando Herrera ]",
+    "title": "React: De Cero a Experto (Hooks y MERN)",
+    "subtitle": "Udemy - Fernando Herrera",
     "year": 2019
   },
   {
-    "title": "React | Redux | FlexBox/CSS-Grid | Gatsby",
-    "subtitle": "Udemy [ Juan Pablo De la torre Valdez ]",
+    "title": "React Avanzado, Gatsby y GraphQL",
+    "subtitle": "Udemy - Juan Pablo De la Torre",
     "year": 2019
   },
   {
-    "title": "Git | GitHub",
-    "subtitle": "EDteam [ Beto Quiroga ]",
+    "title": "Dominando Git y GitHub",
+    "subtitle": "EDteam - Beto Quiroga",
     "year": 2019
   },
   {
-    "title": "HTML | CSS | JavaScript",
-    "subtitle": "EDteam [ Alvaro Felipe ]",
+    "title": "Fundamentos de Desarrollo Web (HTML, CSS, JS)",
+    "subtitle": "EDteam - Álvaro Felipe",
     "year": 2018
   },
   {
-    "title": "TypeScript | Angular",
-    "subtitle": "Udemy [ Victor Roble ]",
+    "title": "Arquitectura Frontend con Angular y TypeScript",
+    "subtitle": "Udemy - Víctor Robles",
     "year": 2018
   }
 ]

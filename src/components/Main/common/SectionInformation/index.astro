@@ -16,56 +16,57 @@ interface Props {
 const show = 4;
 const { data, widthButton = data?.length >= show } = Astro.props;
 const random = Math.floor(Math.random() * 10000)
-const base = data[0].title.replace(/\s+/g, '');
-const currentId = random.toString().padStart(10, base);
+const base = data[0].title.replace(/[^a-zA-Z0-9]/g, '');
+const currentId = `${base}-${random}`;
 const TEXT_BUTTON = {
   showLess: 'Mostrar menos',
-  showMore: 'Mostrar mas'
+  showMore: 'Mostrar más'
 }
-
 ---
 
 <!-- INFORMATION -->
+<div class="info-list">
 {
   data.map((information, index) => (
-    <section>
-      <div class:list={['section', 'fadeIn', `section-${currentId}`, { 'no-display': index >= show }]}>
-        <div class="left">
-          <h4 class="title">
-            { information.url ? 
-              <a 
-                href={information.url} 
-                target="_blanck"
-                rel="noreferrer"
-              >
-                { information.title }
-              </a> 
-            : <span>
-                { information.title }
-              </span> 
-            }
+    <div class:list={['info-item', 'fadeIn', `section-${currentId}`, { 'no-display': index >= show }]}>
+      <div class="info-main">
+        <h4 class="info-title">
+          { information.url ? 
+            <a 
+              href={information.url} 
+              target="_blank"
+              rel="noreferrer"
+              class="info-link"
+            >
+              { information.title }
+            </a> 
+          : <span>
+              { information.title }
+            </span> 
+          }
 
-            {
-              information.image && <ModalStadyTitle
-                url={information.image}
-                alt={information.alt}
-              />
-            }
-
-          </h4>
-          <p class="subtitle">{ information.subtitle }</p>
-        </div>
-        <div class="right">{ information.year }</div>
+          {
+            information.image && <ModalStadyTitle
+              url={information.image}
+              alt={information.alt}
+            />
+          }
+        </h4>
+        <p class="info-subtitle">{ information.subtitle }</p>
       </div>
-    </section>
+      <div class="info-year">{ information.year }</div>
+    </div>
   ))
 }
+</div>
 
 <!-- BUTTON -->
 {
   widthButton && (
-  <div id={`button-${currentId}`} class="button">
-    { TEXT_BUTTON.showMore }
+  <div class="button-container">
+    <button id={`button-${currentId}`} class="show-more-btn">
+      { TEXT_BUTTON.showMore }
+    </button>
   </div>
   )
 }
@@ -74,7 +75,6 @@ const TEXT_BUTTON = {
   const button = document.getElementById(`button-${currentId}`);
   const sections = document.querySelectorAll(`.section-${currentId}`);
   
-
   const toggleDisplay = () =>{
     sections.forEach((section, index) => {
       if (index >= show) {
@@ -82,7 +82,7 @@ const TEXT_BUTTON = {
       }
     });
 
-    if (button.textContent === TEXT_BUTTON.showLess) {
+    if (button.textContent.trim() === TEXT_BUTTON.showLess) {
       button.textContent = TEXT_BUTTON.showMore
     } else {
       button.textContent = TEXT_BUTTON.showLess
@@ -95,58 +95,88 @@ const TEXT_BUTTON = {
 
 
 <style>
-.section {
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.info-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.8rem;
-  color: var(--black);
-  position: relative;
-
-  & .left {
-    & .title {
-      display: flex;
-      align-items: center;
-
-      & a {
-        color: inherit;
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.2;
-        transition: all 0.3s ease;
-      }
-      & a:hover {
-        color: var(--color-button-hover);
-      }
-
-      & span {
-        font-weight: 600;
-        font-size: 1rem;
-      }
-    }
-
-    & .subtitle {
-      font-size: 0.9rem;
-      font-weight: 500;
-      font-style: italic;
-    }
-  }
-
-  & .right {
-    color: $black;
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
+  align-items: flex-start;
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  transition: opacity 0.3s ease;
 }
 
-.button {
-  font-size: 0.9rem;
-  display: inline-block;
-  color: var(--color-button);
-  font-weight: 600;
+.info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
-.button:hover {
-  color: var(--color-button-hover);
+
+.info-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.info-link {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.info-link:hover {
+  color: var(--accent-primary);
+}
+
+.info-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+}
+
+.info-year {
+  font-family: var(--font-family-mono, monospace);
+  font-size: var(--font-size-sm);
+  color: var(--accent-secondary);
+  font-weight: var(--font-weight-bold);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.button-container {
+  margin-top: var(--space-md);
+  display: flex;
+  justify-content: center;
+}
+
+.show-more-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
   cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.show-more-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.1);
 }
 
 .no-display {
@@ -155,15 +185,11 @@ const TEXT_BUTTON = {
 }
 
 .fadeIn {
-  animation: fadeIn 1s ease-in-out forwards;
+  animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

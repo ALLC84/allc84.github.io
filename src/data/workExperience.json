@@ -1,19 +1,19 @@
 [
   {
-    "title": "Conisel",
-    "subtitle": "Actualmente trabajando como desarrollador Frontend Vue.js",
+    "title": "Conisel (ALD Automotive)",
+    "subtitle": "Desarrollo de plataformas de contratación online (Renting) y Showrooms digitales de vehículos. Implementación de dashboards para gestión de campañas y optimización de interfaces con Vue.js.",
     "year": 2021,
     "url": "https://www.conisel.com/"
   },
   {
     "title": "Power Enterprise Electrical Corp.",
-    "subtitle": "Creado utilizando: Vue y DatoCMS",
+    "subtitle": "Desarrollo Full Stack de sitio corporativo JAMstack. Arquitectura moderna utilizando Vue.js para el frontend y DatoCMS para gestión de contenidos headless.",
     "year": 2020,
     "url": "https://tbpoweron.com/"
   },
   {
     "title": "CentroCep",
-    "subtitle": "Creado utilizando: Wordpress con el theme Divi",
+    "subtitle": "Diseño y desarrollo web integral. Implementación de soluciones CMS (WordPress) y personalización de temas para optimizar la experiencia de usuario.",
     "year": 2018,
     "url": "https://www.centrocep.es/"
   }

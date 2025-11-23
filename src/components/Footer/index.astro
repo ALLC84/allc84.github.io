@@ -36,12 +36,13 @@ const rightSection = {
     </span>
     {
       rightSection.tecnologies.map(tecnologie => (
-        <a href={tecnologie.url} class="link" target="_blanck" rel="noreferrer">
+        <a href={tecnologie.url} class="link" target="_blank" rel="noreferrer">
           <Image
             src={tecnologie.icon}
             alt={tecnologie.name}
             width="16"
             height="16"
+            class="icon"
           />
         </a>
       ))
@@ -55,11 +56,14 @@ const rightSection = {
     justify-content: space-between;
     align-items: center;
     font-size: 0.8rem;
-    color: var(--color-dark-gray);
+    color: var(--text-muted);
+    padding-top: var(--space-sm);
 
     & .leftSection {
       & .name {
         margin-left: 0.5rem;
+        color: var(--text-main);
+        font-weight: var(--font-weight-medium);
       }
     }
 
@@ -69,6 +73,21 @@ const rightSection = {
 
       & .description {
         margin-right: 0.5rem;
+      }
+      
+      & .link {
+        display: flex;
+        align-items: center;
+        transition: transform var(--transition-fast);
+      }
+
+      & .link:hover {
+        transform: scale(1.1);
+      }
+
+      & .icon {
+        filter: invert(1);
+        opacity: 0.8;
       }
     }
   }

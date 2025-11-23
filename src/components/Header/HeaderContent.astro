@@ -1,6 +1,4 @@
 ---
-import TitleSection from '@components/TitleSection/index.astro';
-
 interface DataContact {
   name: string;
   profession: string;
@@ -14,20 +12,47 @@ interface Props {
 const { data } = Astro.props;
 ---
   
-<header>
-  <TitleSection
-    tag="h2"
-    size={2.8}
-    weight={800}
-    text={data.name}
-  />
-
-  <TitleSection
-    tag="h1"
-    text={data.profession}
-    weight={600}
-    mt={1}
-  />
-  
-  <p>{data.about}</p>
+<header class="hero-content">
+  <div class="hero-text">
+    <h2 class="name">{data.name}</h2>
+    <h1 class="profession">{data.profession}</h1>
+    <p class="about">{data.about}</p>
+  </div>
 </header>
+
+<style>
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .name {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.02em;
+  }
+
+  .profession {
+    font-family: var(--font-family-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: var(--font-weight-black);
+    line-height: 1.1;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(to right, var(--text-main), var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .about {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 65ch;
+  }
+</style>

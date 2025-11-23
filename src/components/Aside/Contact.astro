@@ -3,44 +3,74 @@ import { Image } from 'astro:assets';
 import contactData from '@data/contact.js';
 ---
 
-<ul class="list">
-  <li class="item">
-    <a class="link" href={`mailto:${contactData.mail.email}`}>
-      <Image class="img" src={contactData.mail.icon} alt="email icon svg" width="20" height="20" />
-      { contactData.mail.title }
+<ul class="contact-list">
+  <li class="contact-item">
+    <a class="contact-link" href={`mailto:${contactData.mail.email}`}>
+      <div class="icon-box">
+        <Image class="icon" src={contactData.mail.icon} alt="email" width="20" height="20" />
+      </div>
+      <span class="label">{ contactData.mail.title }</span>
     </a>
   </li>
-  <li class="item">
-    <a class="link" href={contactData.linkedin.url} target="_blanck" rel="noreferrer">
-      <Image class="img" src={contactData.linkedin.icon} alt="link icon svg" width="20" height="20" />
-      { contactData.linkedin.title }
+  <li class="contact-item">
+    <a class="contact-link" href={contactData.linkedin.url} target="_blank" rel="noreferrer">
+      <div class="icon-box">
+        <Image class="icon" src={contactData.linkedin.icon} alt="linkedin" width="20" height="20" />
+      </div>
+      <span class="label">{ contactData.linkedin.title }</span>
     </a>
   </li>
 </ul>
 
 <style>
-.list {
-  & .item {
-    margin-bottom: 0.5rem;
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
   }
 
-  & .link {
+  .contact-link {
     display: flex;
     align-items: center;
-    text-decoration: none;
-    color: var(--color-light-gray);
-    font-size: 0.9rem;
-    font-weight: 600;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border-radius: var(--card-border-radius);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+    color: var(--text-muted);
   }
 
-  & .link:hover {
-    color: var(--color-gray);
+  .contact-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    transform: translateX(4px);
   }
-  
-  & .img {
-    margin-right: 0.5rem;
-    width: 20px;
-    height: 20px;
+
+  .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
   }
-}
+
+  .icon {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+  }
+
+  .contact-link:hover .icon {
+    opacity: 1;
+  }
+
+  .label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
 </style>
