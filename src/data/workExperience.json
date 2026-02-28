@@ -1,20 +1,20 @@
 [
   {
-    "title": "Conisel (ALD Automotive)",
-    "subtitle": "Desarrollo de plataformas de contratación online (Renting) y Showrooms digitales de vehículos. Implementación de dashboards para gestión de campañas y optimización de interfaces con Vue.js.",
-    "year": 2021,
+    "title": "Senior Frontend Developer - Ayvens (vía Conysel15)",
+    "subtitle": "Desarrollo de infraestructuras digitales para movilidad (MaaS). Co-desarrollo del Design System basado en Design Tokens (Theo) y portales de contratación online para BBVA y Banco Sabadell.",
+    "year": "Enero 2021 – Actualidad",
     "url": "https://www.conisel.com/"
   },
   {
-    "title": "Power Enterprise Electrical Corp.",
-    "subtitle": "Desarrollo Full Stack de sitio corporativo JAMstack. Arquitectura moderna utilizando Vue.js para el frontend y DatoCMS para gestión de contenidos headless.",
-    "year": 2020,
-    "url": "https://tbpoweron.com/"
+    "title": "Engram Nexus | VS Code Extension",
+    "subtitle": "Herramienta para la visualización de grafos y documentación técnica. Punto clave: Gestión de datos con SQLite y renderizado de grafos de alta densidad en React Webviews.",
+    "year": "2026",
+    "url": "https://marketplace.visualstudio.com/items?itemName=ALLC84.engram-nexus"
   },
   {
-    "title": "CentroCep",
-    "subtitle": "Diseño y desarrollo web integral. Implementación de soluciones CMS (WordPress) y personalización de temas para optimizar la experiencia de usuario.",
-    "year": 2018,
-    "url": "https://www.centrocep.es/"
+    "title": "Kunet | Sistema de Comunicación (SAAC)",
+    "subtitle": "Desarrollo de una solución de comunicación para personas con TEA/Afasia. Punto clave: Implementación de arquitectura Offline-first y programación reactiva (Observables) para fluidez absoluta.",
+    "year": "2025",
+    "url": "https://apps.apple.com/us/app/kunet/id6758246744"
   }
 ]

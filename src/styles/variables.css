@@ -14,9 +14,9 @@
   --bg-glass: rgba(10, 10, 10, 0.7);
   
   /* Accents */
-  --accent-primary: #6366f1; /* Indigo */
-  --accent-secondary: #a855f7; /* Purple */
-  --accent-tertiary: #ec4899; /* Pink */
+  --accent-primary: #2346f2; /* Indigo */
+  --accent-secondary: #7c94d3; /* Purple */
+  --accent-tertiary: #d06818; /* Pink */
   --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   
   /* Text */

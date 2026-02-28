@@ -9,13 +9,13 @@ export default {
     'Desarrollador Frontend especializado en crear experiencias digitales de alto impacto. Experto en Vue.js y React, con enfoque en el sector automoción: desarrollo de plataformas de renting online, showrooms interactivos y herramientas de gestión de campañas. Apasionado por el rendimiento web y el diseño UI/UX.',
   image: imageAvatar,
   mail: {
-    email: 'alejandro22cuba@hotmail.com',
+    email: 'alejandrollorente.dev@gmail.com',
     title: 'Envía un correo',
-    icon: EmailIcon
+    icon: EmailIcon,
   },
   linkedin: {
     url: 'https://www.linkedin.com/in/alejandro-llorente-cardenache-b7ba40197/',
     title: 'Linkedin',
-    icon: LinkIcon
+    icon: LinkIcon,
   },
 };
