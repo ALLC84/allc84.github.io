@@ -9,30 +9,14 @@ import educationData from '@data/education.js';
 ---
 
 <div class="main-sections">
-  <!--
-  |-----------------------------------------------
-  |  EXPERIENCIA LABORAL
-  |-----------------------------------------------
-  -->
   <WorkExperience data={workExperienceData} />
-  <!--
-  |-----------------------------------------------
-  |  EDUCACION
-  |-----------------------------------------------
-  -->
   <Education data={educationData} />
-  <!--
-  |-----------------------------------------------
-  |  CURSOS
-  |-----------------------------------------------
-  -->
   <Courses data={coursesData} />
 </div>
 
 <style>
-  .main-sections {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
+.main-sections {
+  display: flex;
+  flex-direction: column;
+}
 </style>

@@ -18,148 +18,544 @@ const { title } = Astro.props;
       name="description"
       content="CV de Alejandro Llorente, desarrollador web especializado en front end."
     />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <ViewTransitions />
   </head>
   <body>
-    <div class="background-gradient"></div>
-    
-    <div class="layout-grid">
-      <!-- Navigation / Dock -->
-      <nav class="nav-area">
-        <slot name="nav" />
-      </nav>
+    <div class="screen">
+      <div class="ide-window">
 
-      <!-- Main Content Grid -->
-      <main class="content-area">
-        <!-- Profile / Aside Section -->
-        <aside class="profile-section bento-card">
-          <slot name="aside" />
-        </aside>
+        <!-- ── TITLE BAR ─────────────────────────────────── -->
+        <div class="title-bar">
+          <div class="traffic-lights">
+            <span class="light light--red"   title="Close"></span>
+            <span class="light light--yellow" title="Minimize"></span>
+            <span class="light light--green"  title="Maximize"></span>
+          </div>
+          <span class="title-text">alejandro-llorente.dev — IDE</span>
+          <div class="title-spacer"></div>
+        </div>
 
-        <!-- Header / Intro Section -->
-        <header class="header-section bento-card">
-          <slot name="header" />
-        </header>
+        <!-- ── IDE BODY ──────────────────────────────────── -->
+        <div class="ide-body">
 
-        <!-- Main Details Section -->
-        <section class="details-section">
-          <slot name="main"/>
-        </section>
-        
-        <!-- Footer -->
-        <footer class="footer-section">
-          <slot name="footer" />
-        </footer>
-      </main>
-    </div>
+          <!-- Activity Bar -->
+          <div class="activity-bar" aria-hidden="true">
+            <button
+              class="activity-icon activity-icon--active"
+              id="btn-sidebar"
+              title="Explorer"
+              aria-label="Toggle sidebar"
+            >
+              <!-- Files icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </button>
+            <button class="activity-icon" title="Search" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </button>
+            <button class="activity-icon" title="Git" aria-label="Source control">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+                <line x1="6" y1="9" x2="6" y2="15"/><path d="M18 9V7a2 2 0 0 0-2-2H9"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Sidebar (File Tree + Profile data) -->
+          <aside class="ide-sidebar" id="ide-sidebar">
+            <div class="sidebar-header">EXPLORER</div>
+            <slot name="aside" />
+          </aside>
+
+          <!-- Editor Panel -->
+          <div class="editor-panel">
+
+            <!-- Tab Bar -->
+            <div class="tab-bar" role="tablist" id="tab-bar">
+              <div class="tab tab--active" role="tab" data-section="section-profile" data-label="profile.ts" tabindex="0">
+                <span class="tab-lang ts">TS</span>
+                <span class="tab-name">profile.ts</span>
+                <span class="tab-close" aria-hidden="true">×</span>
+              </div>
+              <div class="tab" role="tab" data-section="section-experience" data-label="experience.ts" tabindex="0">
+                <span class="tab-lang ts">TS</span>
+                <span class="tab-name">experience.ts</span>
+              </div>
+              <div class="tab" role="tab" data-section="section-education" data-label="education.ts" tabindex="0">
+                <span class="tab-lang ts">TS</span>
+                <span class="tab-name">education.ts</span>
+              </div>
+              <div class="tab" role="tab" data-section="section-courses" data-label="courses.ts" tabindex="0">
+                <span class="tab-lang ts">TS</span>
+                <span class="tab-name">courses.ts</span>
+              </div>
+              <div class="tab-spacer"></div>
+            </div>
+
+            <!-- Breadcrumb -->
+            <div class="breadcrumb" aria-label="Breadcrumb">
+              <span class="bc-item">alejandro-llorente</span>
+              <span class="bc-sep" aria-hidden="true">›</span>
+              <span class="bc-item bc-item--file" id="bc-file">profile.ts</span>
+            </div>
+
+            <!-- Scrollable Editor -->
+            <div class="editor-content">
+              <slot name="header" />
+              <slot name="main" />
+            </div>
+
+          </div><!-- /.editor-panel -->
+        </div><!-- /.ide-body -->
+
+        <!-- ── STATUS BAR ─────────────────────────────────── -->
+        <div class="status-bar">
+          <div class="status-left">
+            <slot name="nav" />
+          </div>
+          <div class="status-right">
+            <slot name="footer" />
+          </div>
+        </div>
+
+      </div><!-- /.ide-window -->
+    </div><!-- /.screen -->
+
+    <script>
+      // ── Sidebar toggle ───────────────────────────────────────
+      const btn     = document.getElementById('btn-sidebar');
+      const sidebar = document.getElementById('ide-sidebar');
+      btn?.addEventListener('click', () => {
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+          sidebar?.classList.toggle('is-open');
+        } else {
+          sidebar?.classList.toggle('is-collapsed');
+        }
+        btn?.classList.toggle('activity-icon--active');
+      });
+
+      // ── Tab navigation + scroll-spy ─────────────────────────
+      const tabs          = Array.from(document.querySelectorAll<HTMLElement>('#tab-bar .tab[data-section]'));
+      const editorContent = document.querySelector<HTMLElement>('.editor-content');
+      const bcFile        = document.getElementById('bc-file');
+
+      /** Scroll editor to a section and activate its tab */
+      function activateTab(tab: HTMLElement): void {
+        const sectionId = tab.dataset.section!;
+        const section   = document.getElementById(sectionId);
+
+        // Scroll within the editor container
+        if (section && editorContent) {
+          const containerTop  = editorContent.getBoundingClientRect().top;
+          const sectionTop    = section.getBoundingClientRect().top;
+          const scrollTarget  = editorContent.scrollTop + (sectionTop - containerTop);
+          editorContent.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+        }
+
+        // Update active tab
+        tabs.forEach(t => t.classList.remove('tab--active'));
+        tab.classList.add('tab--active');
+
+        // Update breadcrumb
+        if (bcFile) bcFile.textContent = tab.dataset.label ?? '';
+      }
+
+      // Click / keyboard on tabs
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => activateTab(tab));
+        tab.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            activateTab(tab);
+          }
+        });
+      });
+
+      // ── Scroll-spy (IntersectionObserver) ───────────────────
+      if (editorContent) {
+        const sectionIds = tabs.map(t => t.dataset.section!);
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            // Find the entry that is most visible
+            let best: IntersectionObserverEntry | null = null;
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                if (!best || entry.intersectionRatio > best.intersectionRatio) {
+                  best = entry;
+                }
+              }
+            }
+            if (best) {
+              const matchedTab = tabs.find(t => t.dataset.section === best!.target.id);
+              if (matchedTab) {
+                tabs.forEach(t => t.classList.remove('tab--active'));
+                matchedTab.classList.add('tab--active');
+                if (bcFile) bcFile.textContent = matchedTab.dataset.label ?? '';
+              }
+            }
+          },
+          {
+            root: editorContent,
+            // Fire when a section enters the top 50% of the editor viewport
+            rootMargin: '0px 0px -45% 0px',
+            threshold: 0,
+          }
+        );
+
+        sectionIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) observer.observe(el);
+        });
+      }
+    </script>
   </body>
 </html>
 
 <style>
-  /* Background Effect */
-  .background-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-      radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
-      radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.15), transparent 25%);
-    z-index: -1;
-    pointer-events: none;
+/* ── SCREEN wrapper ── */
+.screen {
+  height: 100%;
+  background: var(--bg-body);
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+/* ── IDE WINDOW ── */
+.ide-window {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-editor);
+}
+
+/* ── TITLE BAR ── */
+.title-bar {
+  height: var(--titlebar-height);
+  background: var(--bg-titlebar);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-md);
+  gap: var(--space-md);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.traffic-lights {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: default;
+  transition: filter var(--transition-fast);
+}
+.light:hover { filter: brightness(1.2); }
+.light--red    { background: #ff5f57; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.4); }
+.light--yellow { background: #ffbd2e; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.4); }
+.light--green  { background: #28c840; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.4); }
+
+.title-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-normal);
+}
+
+.title-spacer { flex: 1; }
+
+/* ── IDE BODY ── */
+.ide-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── ACTIVITY BAR ── */
+.activity-bar {
+  width: var(--activity-width);
+  background: var(--bg-activity);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.activity-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition-fast), background var(--transition-fast);
+  position: relative;
+}
+.activity-icon:hover {
+  color: var(--text-main);
+  background: var(--bg-sidebar-hover);
+}
+.activity-icon--active {
+  color: var(--text-main);
+}
+.activity-icon--active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 20px;
+  background: var(--accent-primary);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── SIDEBAR ── */
+.ide-sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--dr-current) transparent;
+}
+.ide-sidebar::-webkit-scrollbar { width: 4px; }
+.ide-sidebar::-webkit-scrollbar-track { background: transparent; }
+.ide-sidebar::-webkit-scrollbar-thumb { background: var(--dr-current); border-radius: 4px; }
+
+.sidebar-header {
+  padding: 10px var(--space-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* ── EDITOR PANEL ── */
+.editor-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  height: var(--tabbar-height);
+  background: var(--bg-tab);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  border-right: 1px solid var(--border-color);
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 110px;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.tab:hover {
+  background: rgba(68, 71, 90, 0.3);
+  color: var(--text-main);
+}
+.tab--active {
+  background: var(--bg-tab-active);
+  color: var(--text-main);
+  border-top: 1px solid var(--accent-primary);
+}
+
+.tab:focus-visible {
+  outline: 1px solid var(--accent-primary);
+  outline-offset: -1px;
+}
+
+/* Smooth color transition when tab becomes active */
+.tab {
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-top-color var(--transition-fast);
+}
+
+.tab-lang {
+  font-size: 9px;
+  font-weight: var(--font-weight-bold);
+  padding: 1px 4px;
+  border-radius: 2px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.tab-lang.ts { background: #3178c6; color: #fff; }
+
+.tab-name { font-size: var(--font-size-sm); }
+
+.tab-close {
+  margin-left: auto;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  line-height: 1;
+}
+.tab:hover .tab-close,
+.tab--active .tab-close { opacity: 0.5; }
+.tab-close:hover { opacity: 1 !important; }
+
+.tab-spacer { flex: 1; }
+
+/* ── BREADCRUMB ── */
+.breadcrumb {
+  padding: 3px var(--space-md);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  background: var(--bg-editor);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.bc-item--file { color: var(--dr-cyan); }
+.bc-sep { opacity: 0.4; }
+
+/* ── EDITOR CONTENT ── */
+.editor-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  background: var(--bg-editor);
+  padding: var(--space-lg) 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--dr-current) transparent;
+}
+.editor-content::-webkit-scrollbar { width: 8px; }
+.editor-content::-webkit-scrollbar-track { background: transparent; }
+.editor-content::-webkit-scrollbar-thumb { background: var(--dr-current); border-radius: 4px; }
+
+/* ── STATUS BAR ── */
+.status-bar {
+  height: var(--statusbar-height);
+  background: var(--bg-statusbar);
+  color: var(--text-inverted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-sm);
+  font-size: var(--font-size-xs);
+  flex-shrink: 0;
+  font-weight: var(--font-weight-medium);
+}
+.status-left,
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ── DESKTOP SIDEBAR COLLAPSE ── */
+@media (min-width: 768px) {
+  .ide-sidebar {
+    transition:
+      width 0.22s ease,
+      min-width 0.22s ease,
+      opacity 0.18s ease,
+      border-right-width 0.22s ease;
   }
-
-  /* Main Layout Grid */
-  .layout-grid {
-    max-width: var(--layout-max-width);
-    margin: 0 auto;
-    padding: var(--space-md);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
+  .ide-sidebar.is-collapsed {
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    border-right-width: 0;
   }
+}
 
-  /* Content Area Grid */
-  .content-area {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-    width: 100%;
+/* ── RESPONSIVE ── */
+@media (max-width: 767px) {
+  .ide-sidebar {
+    position: absolute;
+    top: var(--titlebar-height);
+    left: var(--activity-width);
+    bottom: var(--statusbar-height);
+    z-index: 50;
+    transform: translateX(calc(-100% - var(--activity-width)));
+    transition: transform var(--transition-normal);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
   }
-
-  /* Bento Card Style */
-  :global(.bento-card) {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-color);
-    border-radius: var(--card-border-radius);
-    padding: var(--space-lg);
-    transition: transform var(--transition-normal), border-color var(--transition-normal);
+  .ide-sidebar.is-open {
+    transform: translateX(0);
   }
-
-  :global(.bento-card:hover) {
-    border-color: var(--border-color-hover);
-    background: var(--bg-card-hover);
-    transform: translateY(-2px);
+  .editor-content {
+    padding: var(--space-md) 0;
   }
+  .breadcrumb { display: none; }
+}
 
-  /* Responsive Grid */
-  @media (min-width: 768px) {
-    .content-area {
-      grid-template-columns: 300px 1fr;
-      grid-template-rows: auto 1fr auto;
-      grid-template-areas: 
-        "profile header"
-        "profile details"
-        "profile footer";
-    }
-
-    .profile-section {
-      grid-area: profile;
-      position: sticky;
-      top: var(--space-md);
-      height: fit-content;
-      max-height: calc(100vh - var(--space-lg));
-      overflow-y: auto;
-    }
-
-    .header-section {
-      grid-area: header;
-    }
-
-    .details-section {
-      grid-area: details;
-    }
-
-    .footer-section {
-      grid-area: footer;
-    }
+@media (min-width: 1200px) {
+  .screen {
+    padding: 1.5rem;
+    align-items: center;
+    justify-content: center;
   }
-
-  /* Navigation Area */
-  .nav-area {
-    position: fixed;
-    bottom: var(--space-md);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    width: auto;
+  .ide-window {
+    border-radius: var(--layout-border-radius);
+    min-height: calc(100vh - 3rem);
+    max-height: calc(100vh - 3rem);
+    box-shadow:
+      0 30px 70px rgba(0, 0, 0, 0.85),
+      0 0 0 1px var(--border-color);
   }
-  
-  @media (min-width: 1024px) {
-     .layout-grid {
-        padding: var(--space-lg);
-     }
+  .ide-body {
+    overflow: hidden;
   }
+}
 </style>
-

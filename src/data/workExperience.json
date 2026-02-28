@@ -1,19 +1,25 @@
 [
   {
-    "title": "Senior Frontend Developer - Ayvens (vía Conysel15)",
-    "subtitle": "Desarrollo de infraestructuras digitales para movilidad (MaaS). Co-desarrollo del Design System basado en Design Tokens (Theo) y portales de contratación online para BBVA y Banco Sabadell.",
+    "role": "Senior Frontend Developer",
+    "company": "Ayvens · vía Conysel15",
+    "type": "Empleado · Tiempo Completo",
+    "description": "Infraestructuras MaaS, Design System, portales de contratación online para BBVA, Banco Sabadell entre otros.",
     "year": "Enero 2021 – Actualidad",
     "url": "https://www.conisel.com/"
   },
   {
-    "title": "Engram Nexus | VS Code Extension",
-    "subtitle": "Herramienta para la visualización de grafos y documentación técnica. Punto clave: Gestión de datos con SQLite y renderizado de grafos de alta densidad en React Webviews.",
+    "role": "Autor & Desarrollador Principal",
+    "company": "Engram Nexus · VS Code Extension",
+    "type": "Proyecto Personal · Open Source",
+    "description": "Visualización de grafos y documentación técnica. Gestión de datos con SQLite y renderizado de grafos en React Webviews.",
     "year": "2026",
     "url": "https://marketplace.visualstudio.com/items?itemName=ALLC84.engram-nexus"
   },
   {
-    "title": "Kunet | Sistema de Comunicación (SAAC)",
-    "subtitle": "Desarrollo de una solución de comunicación para personas con TEA/Afasia. Punto clave: Implementación de arquitectura Offline-first y programación reactiva (Observables) para fluidez absoluta.",
+    "role": "Autor & Desarrollador Principal",
+    "company": "Kunet · App iOS (SAAC)",
+    "type": "Proyecto Personal · App Store",
+    "description": "Solución de comunicación para personas con TEA/Afasia. Arquitectura Offline-first y programación reactiva con Observables.",
     "year": "2025",
     "url": "https://apps.apple.com/us/app/kunet/id6758246744"
   }

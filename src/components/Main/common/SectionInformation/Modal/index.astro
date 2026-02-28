@@ -172,19 +172,21 @@ const TEXT_BUTTON = {
   }
 
   .trigger-btn {
-    font-size: 0.75rem;
-    padding: 2px 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    color: var(--text-muted);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+    padding: 1px 6px;
+    background: rgba(189, 147, 249, 0.1);
+    border: 1px solid rgba(189, 147, 249, 0.3);
+    border-radius: 3px;
+    color: var(--accent-primary);
     cursor: pointer;
     transition: all var(--transition-fast);
+    letter-spacing: 0.02em;
   }
 
   .trigger-btn:hover {
     background: var(--accent-primary);
-    color: white;
+    color: var(--text-inverted);
     border-color: var(--accent-primary);
   }
 </style>

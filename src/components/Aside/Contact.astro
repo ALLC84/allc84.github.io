@@ -1,76 +1,70 @@
 ---
-import { Image } from 'astro:assets';
 import contactData from '@data/contact.js';
 ---
 
-<ul class="contact-list">
-  <li class="contact-item">
-    <a class="contact-link" href={`mailto:${contactData.mail.email}`}>
-      <div class="icon-box">
-        <Image class="icon" src={contactData.mail.icon} alt="email" width="20" height="20" />
-      </div>
-      <span class="label">{ contactData.mail.title }</span>
-    </a>
-  </li>
-  <li class="contact-item">
-    <a class="contact-link" href={contactData.linkedin.url} target="_blank" rel="noreferrer">
-      <div class="icon-box">
-        <Image class="icon" src={contactData.linkedin.icon} alt="linkedin" width="20" height="20" />
-      </div>
-      <span class="label">{ contactData.linkedin.title }</span>
-    </a>
-  </li>
-</ul>
+<div class="contact-code">
+  <!-- email -->
+  <a
+    class="contact-entry"
+    href={`mailto:${contactData.mail.email}`}
+    title={contactData.mail.title}
+  >
+    <span class="tk-prop">email</span>
+    <span class="tk-punct">: </span>
+    <span class="tk-str email-val">{contactData.mail.email}</span>
+  </a>
+
+  <!-- linkedin -->
+  <a
+    class="contact-entry"
+    href={contactData.linkedin.url}
+    target="_blank"
+    rel="noreferrer"
+    title={contactData.linkedin.title}
+  >
+    <span class="tk-prop">linkedin</span>
+    <span class="tk-punct">: </span>
+    <span class="tk-str link-val">{contactData.linkedin.title}</span>
+    <span class="ext-icon" aria-hidden="true">↗</span>
+  </a>
+</div>
 
 <style>
-  .contact-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
+.contact-code {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: var(--font-size-xs);
+}
 
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm);
-    border-radius: var(--card-border-radius);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid transparent;
-    transition: all var(--transition-fast);
-    color: var(--text-muted);
-  }
+.contact-entry {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 4px var(--space-sm);
+  border-radius: 3px;
+  transition: background var(--transition-fast);
+  color: inherit;
+  text-decoration: none;
+  flex-wrap: wrap;
+}
+.contact-entry:hover {
+  background: var(--bg-sidebar-hover);
+}
 
-  .contact-link:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-main);
-    transform: translateX(4px);
-  }
+.email-val {
+  font-size: 10px;
+  word-break: break-all;
+}
 
-  .icon-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-  }
+.link-val {
+  color: var(--dr-cyan);
+}
 
-  .icon {
-    width: 18px;
-    height: 18px;
-    filter: brightness(0) invert(1);
-    opacity: 0.8;
-  }
-
-  .contact-link:hover .icon {
-    opacity: 1;
-  }
-
-  .label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-  }
+.ext-icon {
+  margin-left: 3px;
+  font-size: 9px;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
 </style>

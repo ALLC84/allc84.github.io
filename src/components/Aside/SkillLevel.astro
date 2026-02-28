@@ -7,70 +7,71 @@ interface Props {
   skills: Skill[];
 }
 const { skills } = Astro.props;
+
+// +1 para incluir el ":" dentro del ancho fijo → colon pegado al nombre
+const maxNameLen = Math.max(...skills.map(s => s.name.toLowerCase().length)) + 1;
+
+const levelToBlocks = (level: number): string => {
+  const filled = '█'.repeat(level);
+  const empty  = '░'.repeat(5 - level);
+  return filled + empty;
+};
+
+const levelColor = (level: number) => {
+  if (level >= 4) return 'var(--accent-green)';
+  if (level >= 3) return 'var(--accent-secondary)';
+  return 'var(--accent-tertiary)';
+};
 ---
 
-<div class="skills-container">
+<div class="skill-code">
   {
     skills.map(skill => (
-      <div class="skill-item">
-        <div class="skill-header">
-          <span class="skill-name">{skill.name}</span>
-          <span class="skill-level-text">{skill.level}/5</span>
-        </div>
-        <div class="progress-track">
-          <div 
-            class="progress-fill" 
-            style={`width: ${(skill.level / 5) * 100}%`}
-          ></div>
-        </div>
+      <div class="skill-line">
+        <span class="tk-prop sk-name" style={`min-width: ${maxNameLen}ch`}>{skill.name.toLowerCase()}<span class="tk-punct">:</span></span>
+        <span class="sk-bar" style={`color: ${levelColor(skill.level)}`}>
+          {levelToBlocks(skill.level)}
+        </span>
+        <span class="sk-num"> {skill.level}/5</span>
       </div>
     ))
   }
 </div>
 
 <style>
-  .skills-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
+.skill-code {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: var(--font-size-xs);
+}
 
-  .skill-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+.skill-line {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 2px var(--space-sm);
+  border-radius: 2px;
+  white-space: pre;
+  transition: background var(--transition-fast);
+}
+.skill-line:hover {
+  background: var(--bg-sidebar-hover);
+}
 
-  .skill-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--font-size-sm);
-  }
+.sk-name {
+  display: inline-block;
+  /* min-width se aplica dinámicamente desde el frontmatter */
+}
 
-  .skill-name {
-    color: var(--text-muted);
-    font-weight: var(--font-weight-medium);
-  }
+.sk-bar {
+  font-size: 11px;
+  letter-spacing: -1px;
+}
 
-  .skill-level-text {
-    color: var(--text-muted);
-    font-size: 10px;
-    opacity: 0.5;
-  }
-
-  .progress-track {
-    width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--accent-gradient);
-    border-radius: 10px;
-    transition: width 1s ease-out;
-  }
+.sk-num {
+  color: var(--dr-comment);
+  opacity: 0.7;
+  font-style: normal;
+}
 </style>

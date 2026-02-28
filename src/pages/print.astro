@@ -1,0 +1,356 @@
+---
+import workExperience from '../data/workExperience.json';
+import courses from '../data/courses.json';
+import skills from '../data/skills.json';
+import skillsTech from '../data/skillsTech.json';
+import language from '../data/language.json';
+import contact from '../data/contact.js';
+import education from '../data/education.js';
+
+// Convert **bold** markdown to <strong>
+const aboutHtml = contact.about.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+// Skill bar renderer
+const blocks = (level: number) => '█'.repeat(level) + '░'.repeat(5 - level);
+
+// Dynamic alignment per skill group
+const maxSkillLen = Math.max(...skills.values.map((s: any) => s.name.toLowerCase().length)) + 1;
+const maxTechLen  = Math.max(...skillsTech.values.map((s: any) => s.name.toLowerCase().length)) + 1;
+const maxLangLen  = Math.max(...language.values.map((s: any) => s.name.toLowerCase().length)) + 1;
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <title>CV · Alejandro Llorente</title>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── HEADER ──────────────────────────────────────── -->
+    <header class="cv-header">
+      <div class="cv-header-identity">
+        <h1 class="cv-name">{contact.name}</h1>
+        <p class="cv-profession">{contact.profession}</p>
+      </div>
+      <div class="cv-header-contact">
+        <a href={`mailto:${contact.mail.email}`} class="cv-link">{contact.mail.email}</a>
+        <span class="sep">·</span>
+        <a href={contact.linkedin.url} class="cv-link" target="_blank">LinkedIn</a>
+      </div>
+    </header>
+
+    <!-- ── PERFIL ───────────────────────────────────────── -->
+    <section class="cv-section">
+      <h2 class="cv-section-title">Perfil</h2>
+      <p class="cv-about" set:html={aboutHtml} />
+    </section>
+
+    <!-- ── EXPERIENCIA ──────────────────────────────────── -->
+    <section class="cv-section">
+      <h2 class="cv-section-title">Experiencia</h2>
+      {workExperience.map((item: any) => (
+        <div class="cv-entry">
+          <div class="cv-entry-head">
+            <span class="cv-role">{item.role}</span>
+            <span class="cv-year">{item.year}</span>
+          </div>
+          <p class="cv-company">
+            {item.company}<span class="cv-type"> · {item.type}</span>
+          </p>
+          <p class="cv-desc">{item.description}</p>
+        </div>
+      ))}
+    </section>
+
+    <!-- ── FORMACIÓN ─────────────────────────────────────── -->
+    <section class="cv-section">
+      <h2 class="cv-section-title">Formación Académica</h2>
+      {education.map((item: any) => (
+        <div class="cv-entry cv-entry--sm">
+          <div class="cv-entry-head">
+            <span class="cv-role">{item.title}</span>
+            <span class="cv-year">{item.year}</span>
+          </div>
+          <p class="cv-company">{item.subtitle}</p>
+        </div>
+      ))}
+    </section>
+
+    <!-- ── HABILIDADES · TECNOLOGÍAS · IDIOMAS ─────────── -->
+    <div class="cv-skills-row">
+      <section class="cv-section cv-section--col">
+        <h2 class="cv-section-title">Habilidades</h2>
+        {skills.values.map((s: any) => (
+          <div class="cv-skill">
+            <span class="cv-skill-name" style={`min-width: ${maxSkillLen}ch`}>
+              {s.name.toLowerCase()}<span class="cv-colon">:</span>
+            </span>
+            <span class="cv-skill-bar">{blocks(s.level)}</span>
+            <span class="cv-skill-num">{s.level}/5</span>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section cv-section--col">
+        <h2 class="cv-section-title">Tecnologías</h2>
+        {skillsTech.values.map((s: any) => (
+          <div class="cv-skill">
+            <span class="cv-skill-name" style={`min-width: ${maxTechLen}ch`}>
+              {s.name.toLowerCase()}<span class="cv-colon">:</span>
+            </span>
+            <span class="cv-skill-bar">{blocks(s.level)}</span>
+            <span class="cv-skill-num">{s.level}/5</span>
+          </div>
+        ))}
+      </section>
+
+      <section class="cv-section cv-section--col">
+        <h2 class="cv-section-title">Idiomas</h2>
+        {language.values.map((s: any) => (
+          <div class="cv-skill">
+            <span class="cv-skill-name" style={`min-width: ${maxLangLen}ch`}>
+              {s.name.toLowerCase()}<span class="cv-colon">:</span>
+            </span>
+            <span class="cv-skill-bar">{blocks(s.level)}</span>
+            <span class="cv-skill-num">{s.level}/5</span>
+          </div>
+        ))}
+      </section>
+    </div>
+
+    <!-- ── CURSOS ─────────────────────────────────────────── -->
+    <section class="cv-section">
+      <h2 class="cv-section-title">Cursos</h2>
+      <div class="cv-courses-grid">
+        {courses.map((c: any) => (
+          <div class="cv-course">
+            <span class="cv-course-name">{c.title}</span>
+            <span class="cv-course-meta">{c.subtitle} · {c.year}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
+
+<style>
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+a { color: inherit; }
+
+/* ── ROOT ── */
+:root {
+  --accent:      #4f46e5;
+  --accent-light: #e0e7ff;
+  --text:        #1a202c;
+  --text-muted:  #64748b;
+  --text-light:  #94a3b8;
+  --border:      #e2e8f0;
+  --font:        'JetBrains Mono', 'Courier New', monospace;
+  --fs-xl:       22px;
+  --fs-lg:       13px;
+  --fs-base:     9.5px;
+  --fs-sm:       8.5px;
+}
+
+/* ── PAGE ── */
+html, body { background: #f8fafc; }
+
+.page {
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  color: var(--text);
+  line-height: 1.6;
+  background: #ffffff;
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 14mm 16mm 16mm;
+}
+
+/* ── HEADER ── */
+.cv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.cv-name {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.cv-profession {
+  font-size: var(--fs-lg);
+  color: var(--accent);
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+.cv-header-contact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.cv-link {
+  color: var(--accent);
+  text-decoration: none;
+}
+.sep { color: var(--text-light); }
+
+/* ── SECTIONS ── */
+.cv-section {
+  margin-bottom: 14px;
+}
+
+.cv-section-title {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── ENTRIES (experience / education) ── */
+.cv-entry {
+  margin-bottom: 10px;
+}
+.cv-entry--sm { margin-bottom: 6px; }
+
+.cv-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.cv-role {
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  color: var(--text);
+}
+
+.cv-year {
+  font-size: var(--fs-sm);
+  color: var(--text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cv-company {
+  font-size: var(--fs-base);
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.cv-type {
+  color: var(--text-light);
+  font-size: var(--fs-sm);
+}
+
+.cv-desc {
+  font-size: var(--fs-base);
+  color: var(--text);
+  margin-top: 3px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ── ABOUT ── */
+.cv-about {
+  line-height: 1.65;
+  color: var(--text);
+}
+.cv-about strong { font-weight: 700; }
+
+/* ── SKILLS ROW ── */
+.cv-skills-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.cv-section--col {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.cv-skill {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 2px;
+  white-space: pre;
+}
+
+.cv-skill-name {
+  display: inline-block;
+  font-size: var(--fs-base);
+  color: var(--text-muted);
+}
+
+.cv-colon {
+  color: var(--text-light);
+}
+
+.cv-skill-bar {
+  font-size: 9px;
+  letter-spacing: -1px;
+  color: var(--accent);
+  padding: 0 4px;
+}
+
+.cv-skill-num {
+  font-size: var(--fs-sm);
+  color: var(--text-light);
+}
+
+/* ── COURSES GRID ── */
+.cv-courses-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 20px;
+}
+
+.cv-course {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cv-course-name {
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.cv-course-meta {
+  font-size: var(--fs-sm);
+  color: var(--text-light);
+}
+</style>

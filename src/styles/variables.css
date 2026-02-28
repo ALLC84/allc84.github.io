@@ -1,83 +1,211 @@
 :root {
-  /* DIMENSIONS */
-  /* ---------------------------------------------------------------- */
-  --layout-max-width: 1200px;
-  --layout-border-radius: 24px;
-  --card-border-radius: 16px;
-  
-  /* COLORS */
-  /* ---------------------------------------------------------------- */
-  /* Dark Mode Palette */
-  --bg-body: #0a0a0a;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
-  --bg-glass: rgba(10, 10, 10, 0.7);
-  
-  /* Accents */
-  --accent-primary: #2346f2; /* Indigo */
-  --accent-secondary: #7c94d3; /* Purple */
-  --accent-tertiary: #d06818; /* Pink */
-  --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  
-  /* Text */
-  --text-main: #ffffff;
-  --text-muted: #a1a1aa;
-  --text-inverted: #000000;
-  
-  /* Borders */
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-color-hover: rgba(255, 255, 255, 0.2);
+  /* ─── DRACULA COLOR PALETTE ─────────────────────────── */
+  --dr-bg: #282a36;
+  --dr-current: #44475a;
+  --dr-fg: #f8f8f2;
+  --dr-comment: #6272a4;
+  --dr-cyan: #8be9fd;
+  --dr-green: #50fa7b;
+  --dr-orange: #ffb86c;
+  --dr-pink: #ff79c6;
+  --dr-purple: #bd93f9;
+  --dr-red: #ff5555;
+  --dr-yellow: #f1fa8c;
 
-  /* SHADOWS & GLOWS */
-  /* ---------------------------------------------------------------- */
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --glow-primary: 0 0 20px rgba(99, 102, 241, 0.3);
-  
-  /* FONTS */
-  /* ---------------------------------------------------------------- */
-  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-display: 'Outfit', var(--font-family-sans);
-  
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  --font-size-4xl: 2.25rem;
-  
+  /* ─── LAYOUT SURFACES ────────────────────────────────── */
+  --bg-body: #0d1117;
+  --bg-titlebar: #191a24;
+  --bg-activity: #12131c;
+  --bg-sidebar: #1a1b26;
+  --bg-sidebar-hover: rgba(68, 71, 90, 0.35);
+  --bg-editor: #1e1f2e;
+  --bg-tab: #14151f;
+  --bg-tab-active: #1e1f2e;
+  --bg-card: #252637;
+  --bg-card-hover: #2e2f47;
+  --bg-statusbar: #bd93f9;
+
+  /* ─── SEMANTIC ALIASES ───────────────────────────────── */
+  --accent-primary: #bd93f9;
+  --accent-secondary: #8be9fd;
+  --accent-tertiary: #ffb86c;
+  --accent-green: #50fa7b;
+  --accent-pink: #ff79c6;
+  --accent-red: #ff5555;
+  --accent-yellow: #f1fa8c;
+  --accent-gradient: linear-gradient(135deg, #bd93f9, #8be9fd);
+
+  --text-main: #f8f8f2;
+  --text-muted: #6272a4;
+  --text-inverted: #1a1b26;
+
+  --border-color: rgba(98, 114, 164, 0.2);
+  --border-color-hover: rgba(189, 147, 249, 0.5);
+
+  /* ─── IDE CHROME SIZES ───────────────────────────────── */
+  --titlebar-height: 36px;
+  --tabbar-height: 36px;
+  --statusbar-height: 24px;
+  --activity-width: 44px;
+  --sidebar-width: 240px;
+  --layout-max-width: 1440px;
+  --layout-border-radius: 10px;
+  --card-border-radius: 4px;
+
+  /* ─── FONTS (100% Monospaced) ────────────────────────── */
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', monospace;
+  --font-family-sans: var(--font-family-mono);
+  --font-family-display: var(--font-family-mono);
+
+  --font-size-xs: 0.68rem;
+  --font-size-sm: 0.78rem;
+  --font-size-base: 0.875rem;
+  --font-size-lg: 0.95rem;
+  --font-size-xl: 1.05rem;
+  --font-size-2xl: 1.25rem;
+  --font-size-3xl: 1.5rem;
+  --font-size-4xl: 1.875rem;
+
   --font-weight-normal: 400;
   --font-weight-medium: 500;
-  --font-weight-bold: 700;
-  --font-weight-black: 900;
+  --font-weight-bold: 600;
+  --font-weight-black: 700;
 
-  /* SPACING */
-  /* ---------------------------------------------------------------- */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 1.5rem;
-  --space-lg: 2rem;
-  --space-xl: 3rem;
-  
-  /* ANIMATION */
-  /* ---------------------------------------------------------------- */
-  --transition-fast: 200ms ease;
-  --transition-normal: 300ms ease;
-  --transition-slow: 500ms ease;
+  /* ─── SPACING ─────────────────────────────────────────── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+
+  /* ─── SHADOWS & GLOWS ────────────────────────────────── */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.7);
+  --glow-primary: 0 0 15px rgba(189, 147, 249, 0.35);
+
+  /* ─── ANIMATION ──────────────────────────────────────── */
+  --transition-fast: 120ms ease;
+  --transition-normal: 220ms ease;
+  --transition-slow: 400ms ease;
 }
 
-/* Global Reset/Base Styles that rely on variables */
 body {
   background-color: var(--bg-body);
   color: var(--text-main);
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
   -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-display);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-mono);
   font-weight: var(--font-weight-bold);
-  line-height: 1.2;
+  line-height: 1.3;
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ─── Syntax token colors (global) ─────────────────────── */
+.tk-kw {
+  color: var(--dr-purple);
+}
+.tk-ty {
+  color: var(--dr-cyan);
+}
+.tk-var {
+  color: var(--dr-fg);
+}
+.tk-prop {
+  color: var(--dr-cyan);
+}
+.tk-str {
+  color: var(--dr-yellow);
+}
+.tk-tmpl {
+  color: var(--dr-orange);
+}
+.tk-cm {
+  color: var(--dr-comment);
+  font-style: italic;
+}
+.tk-tag {
+  color: var(--dr-green);
+  font-style: normal;
+  margin-right: 8px;
+}
+.tk-num {
+  color: var(--dr-purple);
+}
+.tk-fn {
+  color: var(--dr-green);
+}
+.tk-op {
+  color: var(--dr-pink);
+}
+.tk-punct {
+  color: var(--dr-fg);
+  font-style: normal;
+}
+.tk-bool {
+  color: var(--dr-purple);
+}
+.tk-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--dr-fg);
+  vertical-align: text-bottom;
+  animation: blink 1.2s step-end infinite;
+  margin-left: 1px;
+}
+
+/* ─── Line number column ────────────────────────────────── */
+.ln {
+  display: inline-block;
+  width: 2.8em;
+  text-align: right;
+  color: var(--dr-comment);
+  opacity: 0.45;
+  font-size: var(--font-size-xs);
+  user-select: none;
+  padding-right: var(--space-md);
+  flex-shrink: 0;
+}
+
+/* ─── Code line ─────────────────────────────────────────── */
+.cl {
+  display: flex;
+  align-items: baseline;
+  min-height: 1.55em;
+  padding-right: var(--space-md);
+  font-size: var(--font-size-base);
+  line-height: 1.55;
+  white-space: pre;
+}
+
+.cl:hover {
+  background: rgba(68, 71, 90, 0.2);
+}
+
+/* ─── Indent helpers ────────────────────────────────────── */
+.i1 {
+  padding-left: 2ch;
+}
+.i2 {
+  padding-left: 4ch;
 }

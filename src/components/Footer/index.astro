@@ -1,94 +1,28 @@
 ---
-import { Image } from 'astro:assets';
-import PartingLine from '@components/PartingLine/index.astro';
-import AstroIcon from '@assets/images/astro.svg'
-import contactData from '@data/contact.js'
-
-const leftSection = {
-  name: contactData.name,
-  year: new Date().getFullYear(),
-};
-
-const rightSection = {
-  description: 'Creado utilizando, ',
-  tecnologies: [
-    {
-      name: 'Astro',
-      icon: AstroIcon,
-      url: 'https://astro.build/'
-    }
-  ],
-};
+import contactData from '@data/contact.js';
+const year = new Date().getFullYear();
 ---
 
-<PartingLine weight={0.01} width={100} mt={1.5} mb={1.5} />
-
-<footer class="footer">
-  <div class="leftSection">
-    <span> © {leftSection.year},</span>
-    <span class="name">
-      {leftSection.name}
-    </span>
-  </div>
-  <div class="rightSection">
-    <span class="description">
-      {rightSection.description}
-    </span>
-    {
-      rightSection.tecnologies.map(tecnologie => (
-        <a href={tecnologie.url} class="link" target="_blank" rel="noreferrer">
-          <Image
-            src={tecnologie.icon}
-            alt={tecnologie.name}
-            width="16"
-            height="16"
-            class="icon"
-          />
-        </a>
-      ))
-    }
-  </div>
-</footer>
+<!-- Status bar right items -->
+<span class="status-item">Astro</span>
+<span class="status-sep" aria-hidden="true">·</span>
+<span class="status-item">TypeScript</span>
+<span class="status-sep" aria-hidden="true">·</span>
+<span class="status-item">UTF-8</span>
+<span class="status-sep" aria-hidden="true">·</span>
+<span class="status-item">© {year}&nbsp;{contactData.name}</span>
 
 <style>
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    padding-top: var(--space-sm);
+.status-item {
+  padding: 0 4px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-inverted);
+  white-space: nowrap;
+}
 
-    & .leftSection {
-      & .name {
-        margin-left: 0.5rem;
-        color: var(--text-main);
-        font-weight: var(--font-weight-medium);
-      }
-    }
-
-    & .rightSection {
-      display: flex;
-      align-items: center;
-
-      & .description {
-        margin-right: 0.5rem;
-      }
-      
-      & .link {
-        display: flex;
-        align-items: center;
-        transition: transform var(--transition-fast);
-      }
-
-      & .link:hover {
-        transform: scale(1.1);
-      }
-
-      & .icon {
-        filter: invert(1);
-        opacity: 0.8;
-      }
-    }
-  }
+.status-sep {
+  color: var(--text-inverted);
+  opacity: 0.4;
+}
 </style>

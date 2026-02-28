@@ -1,41 +1,145 @@
 ---
-import SectionInformation from './common/SectionInformation/index.astro'
-
-interface SectionWorkExperience {
-  title: string;
-  subtitle: string;
-  year: number;
-  url: string;
-};
-
+interface WorkExperienceItem {
+  role: string;
+  company: string;
+  type: string;
+  description: string;
+  year: string;
+  url?: string;
+}
 interface Props {
-  data: SectionWorkExperience[]
-};
-
+  data: WorkExperienceItem[];
+}
 const { data } = Astro.props;
-const nameSection = 'Experiencia Laboral';
 ---
 
-<section class="bento-card">
-  <header class="card-header">
-    <h3 class="card-title">{nameSection}</h3>
-  </header>
-  <div class="card-content">
-    <SectionInformation data={data} />
-  </div>
+<section id="section-experience" class="code-section">
+
+  <!-- Section header -->
+  <div class="cl"><span class="ln">22</span><span class="tk-cm">// ─── experience.ts ──────────────────────────────────────</span></div>
+  <div class="cl"><span class="ln">23</span></div>
+  <div class="cl"><span class="ln">24</span><span class="tk-kw">type </span><span class="tk-ty">WorkExperience</span><span class="tk-punct"> = &#123;</span></div>
+  <div class="cl"><span class="ln">25</span><span class="i1"><span class="tk-prop">year</span><span class="tk-punct">:        </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+  <div class="cl"><span class="ln">26</span><span class="i1"><span class="tk-prop">description</span><span class="tk-punct">: </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+  <div class="cl"><span class="ln">27</span><span class="tk-punct">&#125;;</span></div>
+  <div class="cl"><span class="ln">28</span></div>
+  <div class="cl"><span class="ln">29</span><span class="tk-kw">const </span><span class="tk-var">workExperience</span><span class="tk-punct">: </span><span class="tk-ty">WorkExperience</span><span class="tk-punct">[] = [</span></div>
+
+  <!-- Entries -->
+  {data.map((item) => (
+    <div class="exp-entry">
+
+      <!-- { -->
+      <div class="cl"><span class="ln entry-ln">–</span><span class="i1"><span class="tk-punct">&#123;</span></span></div>
+
+      <!-- /** -->
+      <div class="cl"><span class="ln entry-ln">–</span><span class="i2 tk-cm">/**</span></div>
+
+      <!-- * @role -->
+      <div class="cl cl--wrap">
+        <span class="ln entry-ln">–</span>
+        <span class="i2 tk-cm">
+          <span class="jdoc-star"> * </span><span class="tk-tag">@role</span>
+          {item.url
+            ? <a href={item.url} target="_blank" rel="noreferrer" class="exp-link tk-cm">{item.role}</a>
+            : item.role
+          }
+        </span>
+      </div>
+
+      <!-- * @company -->
+      <div class="cl cl--wrap">
+        <span class="ln entry-ln">–</span>
+        <span class="i2 tk-cm">
+          <span class="jdoc-star"> * </span><span class="tk-tag">@company</span>{item.company}
+        </span>
+      </div>
+
+      <!-- * @type -->
+      <div class="cl">
+        <span class="ln entry-ln">–</span>
+        <span class="i2 tk-cm"><span class="jdoc-star"> * </span><span class="tk-tag">@type</span>{item.type}</span>
+      </div>
+
+      <!-- */ -->
+      <div class="cl"><span class="ln entry-ln">–</span><span class="i2 tk-cm"> */</span></div>
+
+      <!-- year: "..." -->
+      <div class="cl">
+        <span class="ln entry-ln">–</span>
+        <span class="i2">
+          <span class="tk-prop">year</span><span class="tk-punct">: </span>
+          <span class="tk-str">"{item.year}"</span><span class="tk-punct">,</span>
+        </span>
+      </div>
+
+      <!-- // description -->
+      <div class="cl cl--wrap">
+        <span class="ln entry-ln">–</span>
+        <span class="i2 tk-cm desc-line">// {item.description}</span>
+      </div>
+
+      <!-- }, -->
+      <div class="cl"><span class="ln entry-ln">–</span><span class="i1"><span class="tk-punct">&#125;,</span></span></div>
+
+      <!-- spacer -->
+      <div class="cl cl--spacer"><span class="ln entry-ln">–</span></div>
+
+    </div>
+  ))}
+
+  <!-- ]; -->
+  <div class="cl"><span class="ln close-ln">–</span><span class="tk-punct">];</span></div>
+  <div class="cl"><span class="ln close-ln">–</span></div>
+
 </section>
 
 <style>
-  .card-header {
-    margin-bottom: var(--space-md);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--border-color);
-  }
+.code-section {
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-md);
+}
 
-  .card-title {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--accent-secondary);
-    letter-spacing: -0.01em;
-  }
+/* Wrapping code row (for long text) */
+.cl--wrap {
+  white-space: normal !important;
+  word-break: break-word;
+  align-items: flex-start;
+}
+.cl--wrap .ln,
+.cl--wrap .entry-ln { margin-top: 0; }
+
+.cl--spacer { min-height: 0.6em; }
+
+/* Entry hover indicator */
+.exp-entry {
+  border-left: 2px solid transparent;
+  transition: border-color var(--transition-fast);
+}
+.exp-entry:hover { border-left-color: var(--accent-primary); }
+
+/* JSDoc star prefix */
+.jdoc-star {
+  white-space: pre;
+  flex-shrink: 0;
+}
+
+/* Description comment line */
+.desc-line { font-style: italic; }
+
+/* Inline link in JSDoc */
+.exp-link {
+  text-decoration: none;
+  border-bottom: 1px dashed var(--dr-comment);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.exp-link:hover {
+  color: var(--accent-secondary);
+  border-bottom-color: var(--accent-secondary);
+}
+
+/* Dim decorative line numbers */
+.entry-ln,
+.close-ln { opacity: 0.2 !important; }
 </style>

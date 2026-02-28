@@ -1,125 +1,56 @@
 ---
 import { Image } from 'astro:assets';
-import DownloadButton from '@assets/images/download-button.svg';
 import GithubIcon from '@assets/images/github.svg';
-import CV from '@assets/pdf/CV.pdf'
 ---
 
-<div class="dock-container">
-  <a
-    href="https://github.com/ALLC84/cv-vuejs"
-    target="_blank"
-    rel="noreferrer"
-    class="dock-item"
-    aria-label="GitHub"
-  >
-    <Image
-      class="icon"
-      src={GithubIcon}
-      alt="GitHub"
-      width="24"
-      height="24"
-    />
-    <span class="tooltip">GitHub</span>
-  </a>
-  
-  <div class="separator"></div>
+<!-- Status bar left items -->
+<a
+  href="https://github.com/ALLC84"
+  target="_blank"
+  rel="noreferrer"
+  class="status-item"
+  aria-label="GitHub repository"
+>
+  <Image src={GithubIcon} alt="" width="12" height="12" class="status-icon" aria-hidden="true" />
+  <span>GitHub</span>
+</a>
 
-  <a 
-    href={CV} 
-    target="_blank" 
-    rel="noreferrer" 
-    download 
-    class="dock-item"
-    aria-label="Download CV"
-  >
-    <Image
-      class="icon"
-      src={DownloadButton}
-      alt="Download"
-      width="24"
-      height="24"
-    />
-    <span class="tooltip">Download CV</span>
-  </a>
-</div>
+<a
+  href="/CV-Alejandro-Llorente.pdf"
+  target="_blank"
+  rel="noreferrer"
+  download="CV-Alejandro-Llorente.pdf"
+  class="status-item"
+  aria-label="Download CV PDF"
+>
+  <span class="dl-icon" aria-hidden="true">⬇</span>
+  <span>Download CV</span>
+</a>
 
 <style>
-  .dock-container {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-    background: rgba(20, 20, 20, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 100px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    transition: all var(--transition-normal);
-  }
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  height: var(--statusbar-height);
+  color: var(--text-inverted);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  transition: background var(--transition-fast);
+  white-space: nowrap;
+}
+.status-item:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
 
-  .dock-container:hover {
-    background: rgba(30, 30, 30, 0.8);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
-  }
+.status-icon {
+  filter: brightness(0);
+  opacity: 0.8;
+  width: 12px;
+  height: 12px;
+}
 
-  .separator {
-    width: 1px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .dock-item {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    transition: all var(--transition-fast);
-    color: var(--text-main);
-  }
-
-  .dock-item:hover {
-    background: var(--accent-primary);
-    transform: translateY(-4px) scale(1.1);
-    box-shadow: 0 0 15px var(--accent-primary);
-  }
-
-  .icon {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
-    transition: transform var(--transition-fast);
-  }
-
-  /* Tooltip */
-  .tooltip {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    padding: 4px 8px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    font-size: 12px;
-    border-radius: 4px;
-    opacity: 0;
-    visibility: hidden;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-    pointer-events: none;
-    margin-bottom: 8px;
-  }
-
-  .dock-item:hover .tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
+.dl-icon { font-size: 10px; }
 </style>
-

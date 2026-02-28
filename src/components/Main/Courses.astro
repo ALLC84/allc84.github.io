@@ -6,35 +6,35 @@ interface SectionCourses {
   subtitle: string;
   year: number;
 }
-
 interface Props {
-  data: SectionCourses[]
+  data: SectionCourses[];
 }
-
 const { data } = Astro.props;
-const nameSection = 'Cursos'
 ---
 
-<section class="bento-card">
-  <header class="card-header">
-    <h3 class="card-title">{nameSection}</h3>
-  </header>
-  <div class="card-content">
-    <SectionInformation data={data} widthButton={data.length > 5} />
-  </div>
+<section id="section-courses" class="code-section">
+
+  <div class="cl"><span class="ln close-ln">–</span><span class="tk-cm">// ─── courses.ts ─────────────────────────────────────────</span></div>
+  <div class="cl"><span class="ln close-ln">–</span></div>
+  <div class="cl"><span class="ln close-ln">–</span><span class="tk-kw">type </span><span class="tk-ty">Course</span><span class="tk-punct"> = &#123;</span></div>
+  <div class="cl"><span class="ln close-ln">–</span><span class="i1"><span class="tk-prop">name</span><span class="tk-punct">: </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+  <div class="cl"><span class="ln close-ln">–</span><span class="i1"><span class="tk-prop">via</span><span class="tk-punct">:  </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+  <div class="cl"><span class="ln close-ln">–</span><span class="i1"><span class="tk-prop">year</span><span class="tk-punct">: </span><span class="tk-ty">number</span><span class="tk-punct">;</span></span></div>
+  <div class="cl"><span class="ln close-ln">–</span><span class="tk-punct">&#125;;</span></div>
+  <div class="cl"><span class="ln close-ln">–</span></div>
+  <div class="cl"><span class="ln close-ln">–</span><span class="tk-kw">const </span><span class="tk-var">courses</span><span class="tk-punct">: </span><span class="tk-ty">Course</span><span class="tk-punct">[] = [</span></div>
+
+  <SectionInformation data={data} variant="course" widthButton={data.length > 5} />
+
+  <div class="cl"><span class="ln close-ln">–</span><span class="tk-punct">];</span></div>
+  <div class="cl"><span class="ln close-ln">–</span></div>
+
 </section>
 
 <style>
-  .card-header {
-    margin-bottom: var(--space-md);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .card-title {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--accent-primary);
-    letter-spacing: -0.01em;
-  }
+.code-section {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+}
+.close-ln { opacity: 0.2 !important; }
 </style>

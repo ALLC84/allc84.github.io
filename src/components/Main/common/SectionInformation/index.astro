@@ -1,7 +1,7 @@
 ---
 import ModalStadyTitle from './Modal/index.astro';
 
-interface sectionInformationData {
+interface SectionInformationData {
   title: string;
   subtitle: string;
   year: number;
@@ -10,186 +10,245 @@ interface sectionInformationData {
   alt?: string;
 }
 interface Props {
-  data: sectionInformationData[];
-  widthButton?: Boolean
-};
+  data: SectionInformationData[];
+  widthButton?: Boolean;
+  variant?: 'education' | 'course';
+}
+
 const show = 4;
-const { data, widthButton = data?.length >= show } = Astro.props;
-const random = Math.floor(Math.random() * 10000)
+const {
+  data,
+  widthButton = data?.length >= show,
+  variant = 'experience',
+} = Astro.props;
+
+const random = Math.floor(Math.random() * 10000);
 const base = data[0].title.replace(/[^a-zA-Z0-9]/g, '');
 const currentId = `${base}-${random}`;
+
 const TEXT_BUTTON = {
-  showLess: 'Mostrar menos',
-  showMore: 'Mostrar más'
-}
+  showLess: '// ↑ collapse entries',
+  showMore:  '// ↓ show all entries',
+};
+
 ---
 
-<!-- INFORMATION -->
 <div class="info-list">
-{
-  data.map((information, index) => (
-    <div class:list={['info-item', 'fadeIn', `section-${currentId}`, { 'no-display': index >= show }]}>
-      <div class="info-main">
-        <h4 class="info-title">
-          { information.url ? 
-            <a 
-              href={information.url} 
-              target="_blank"
-              rel="noreferrer"
-              class="info-link"
-            >
-              { information.title }
-            </a> 
-          : <span>
-              { information.title }
-            </span> 
-          }
+  {
+    data.map((item, index) => (
+      <div
+        class:list={['info-entry', `section-${currentId}`, { 'no-display': index >= show }]}
+      >
+        {variant === 'education' ? (
+          /* ── EDUCATION: compact multi-line, no JSDoc ── */
+          <>
+            <div class="code-row">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-1"><span class="tk-punct">&#123;</span></span>
+            </div>
 
-          {
-            information.image && <ModalStadyTitle
-              url={information.image}
-              alt={information.alt}
-            />
-          }
-        </h4>
-        <p class="info-subtitle">{ information.subtitle }</p>
+            <div class="code-row code-row--wrap">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-2">
+                <span class="tk-prop">degree</span><span class="tk-punct">: </span>
+                <span class="tk-str">"{item.title}"</span><span class="tk-punct">,</span>
+                {item.image && <ModalStadyTitle url={item.image} alt={item.alt} />}
+              </span>
+            </div>
+
+            <div class="code-row code-row--wrap">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-2">
+                <span class="tk-prop">school</span><span class="tk-punct">: </span>
+                <span class="tk-tmpl">"{item.subtitle}"</span><span class="tk-punct">,</span>
+              </span>
+            </div>
+
+            <div class="code-row">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-2">
+                <span class="tk-prop">year</span><span class="tk-punct">:   </span>
+                <span class="tk-num">{item.year}</span><span class="tk-punct">,</span>
+              </span>
+            </div>
+
+            <div class="code-row">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-1"><span class="tk-punct">&#125;,</span></span>
+            </div>
+
+            <div class="code-row code-row--spacer">
+              <span class="ln" aria-hidden="true">–</span>
+            </div>
+          </>
+        ) : variant === 'course' ? (
+          /* ── COURSE: multi-line, same pattern as education ── */
+          <>
+            <div class="code-row">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-1"><span class="tk-punct">&#123;</span></span>
+            </div>
+
+            <div class="code-row code-row--wrap">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-2">
+                <span class="tk-prop">name</span><span class="tk-punct">: </span>
+                {item.url
+                  ? <a href={item.url} target="_blank" rel="noreferrer" class="code-link"><span class="tk-str">"{item.title}"</span></a>
+                  : <span class="tk-str">"{item.title}"</span>
+                }
+                <span class="tk-punct">,</span>
+              </span>
+            </div>
+
+            <div class="code-row code-row--wrap">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-2">
+                <span class="tk-prop">via</span><span class="tk-punct">:  </span>
+                <span class="tk-tmpl">"{item.subtitle}"</span><span class="tk-punct">,</span>
+              </span>
+            </div>
+
+            <div class="code-row">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-2">
+                <span class="tk-prop">year</span><span class="tk-punct">: </span>
+                <span class="tk-num">{item.year}</span><span class="tk-punct">,</span>
+              </span>
+            </div>
+
+            <div class="code-row">
+              <span class="ln" aria-hidden="true">–</span>
+              <span class="indent-1"><span class="tk-punct">&#125;,</span></span>
+            </div>
+
+            <div class="code-row code-row--spacer">
+              <span class="ln" aria-hidden="true">–</span>
+            </div>
+          </>
+        ) : null}
       </div>
-      <div class="info-year">{ information.year }</div>
-    </div>
-  ))
-}
+    ))
+  }
 </div>
 
-<!-- BUTTON -->
-{
-  widthButton && (
-  <div class="button-container">
-    <button id={`button-${currentId}`} class="show-more-btn">
-      { TEXT_BUTTON.showMore }
+<!-- Show more button -->
+{widthButton && (
+  <div class="btn-wrap">
+    <button id={`button-${currentId}`} class="expand-btn">
+      <span class="btn-text tk-cm">{TEXT_BUTTON.showMore}</span>
     </button>
   </div>
-  )
-}
+)}
 
-<script define:vars={{currentId, TEXT_BUTTON, show}}>
+<script define:vars={{ currentId, TEXT_BUTTON, show }}>
   const button = document.getElementById(`button-${currentId}`);
-  const sections = document.querySelectorAll(`.section-${currentId}`);
-  
-  const toggleDisplay = () =>{
-    sections.forEach((section, index) => {
-      if (index >= show) {
-        section.classList.toggle('no-display');
-      }
+  const items = document.querySelectorAll(`.section-${currentId}`);
+
+  const toggleDisplay = () => {
+    items.forEach((item, i) => {
+      if (i >= show) item.classList.toggle('no-display');
     });
+    const textEl = button.querySelector('.btn-text');
+    textEl.textContent =
+      textEl.textContent.trim() === TEXT_BUTTON.showLess
+        ? TEXT_BUTTON.showMore
+        : TEXT_BUTTON.showLess;
+  };
 
-    if (button.textContent.trim() === TEXT_BUTTON.showLess) {
-      button.textContent = TEXT_BUTTON.showMore
-    } else {
-      button.textContent = TEXT_BUTTON.showLess
-    }
-  }
-  if ( button ) {
-    button.addEventListener("click", toggleDisplay);
-  }
+  button?.addEventListener('click', toggleDisplay);
 </script>
-
 
 <style>
 .info-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
 }
 
-.info-item {
+/* Code row – base flex row matching .cl style */
+.code-row {
   display: flex;
-  justify-content: space-between;
+  align-items: baseline;
+  min-height: 1.55em;
+  line-height: 1.55;
+  font-size: var(--font-size-base);
+  padding-right: var(--space-md);
+  transition: background var(--transition-fast);
+}
+.code-row:hover { background: rgba(68, 71, 90, 0.15); }
+
+.code-row--wrap {
   align-items: flex-start;
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--border-color);
-  transition: opacity 0.3s ease;
+  white-space: normal;
+  word-break: break-word;
 }
+.code-row--wrap .ln { margin-top: 0; }
 
-.info-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
+.code-row--spacer { min-height: 0.5em; }
 
-.info-main {
+/* Indents */
+.indent-1 { padding-left: 2ch; }
+.indent-2 { padding-left: 4ch; display: inline; }
+
+/* JSDoc line layout */
+.jsdoc-line {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.info-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+  align-items: baseline;
   flex-wrap: wrap;
+  gap: 0;
 }
 
-.info-link {
-  color: var(--text-main);
+.jsdoc-star {
+  flex-shrink: 0;
+  white-space: pre;
+}
+
+/* Fixed-width gap between the @tag and its value so they align */
+.jsdoc-gap {
+  display: inline-block;
+  width: 0.6ch;
+  flex-shrink: 0;
+}
+
+/* Links inside code blocks */
+.code-link {
   text-decoration: none;
+  border-bottom: 1px dashed var(--dr-comment);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+.code-link:hover {
+  color: var(--accent-secondary);
+  border-bottom-color: var(--accent-secondary);
+}
+
+/* Entry hover highlight */
+.info-entry {
+  border-left: 2px solid transparent;
+  transition: border-color var(--transition-fast);
+}
+.info-entry:hover { border-left-color: var(--accent-primary); }
+
+/* Indent helpers (local) */
+.indent-1 { padding-left: 2ch; }
+.indent-2 { padding-left: 4ch; }
+
+/* Hidden */
+.no-display { display: none; }
+
+/* Expand button */
+.btn-wrap {
+  padding: var(--space-sm) 0 var(--space-sm) 2ch;
+}
+.expand-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  padding: 4px 0;
   transition: color var(--transition-fast);
 }
-
-.info-link:hover {
+.expand-btn:hover .tk-cm {
   color: var(--accent-primary);
-}
-
-.info-subtitle {
-  font-size: var(--font-size-base);
-  color: var(--text-muted);
-}
-
-.info-year {
-  font-family: var(--font-family-mono, monospace);
-  font-size: var(--font-size-sm);
-  color: var(--accent-secondary);
-  font-weight: var(--font-weight-bold);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.button-container {
-  margin-top: var(--space-md);
-  display: flex;
-  justify-content: center;
-}
-
-.show-more-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.show-more-btn:hover {
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
-  background: rgba(99, 102, 241, 0.1);
-}
-
-.no-display {
-  opacity: 0;
-  display: none;
-}
-
-.fadeIn {
-  animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 </style>

@@ -4,55 +4,74 @@ interface DataContact {
   profession: string;
   about: string;
 }
-
 interface Props {
   data: DataContact;
 }
-
 const { data } = Astro.props;
 ---
-  
-<header class="hero-content">
-  <div class="hero-text">
-    <h2 class="name">{data.name}</h2>
-    <h1 class="profession">{data.profession}</h1>
-    <p class="about">{data.about}</p>
+
+<section id="section-profile" class="editor-section" aria-label="Profile">
+  <!-- Code block simulating profile.ts -->
+  <div class="code-block">
+
+    <!-- JSDoc comment -->
+    <div class="cl"><span class="ln">1</span><span class="tk-cm">/**</span></div>
+    <div class="cl"><span class="ln">2</span><span class="tk-cm"> * <span class="tk-tag">@author</span>    {data.name}</span></div>
+    <div class="cl"><span class="ln">3</span><span class="tk-cm"> * <span class="tk-tag">@role</span>      {data.profession}</span></div>
+    <div class="cl"><span class="ln">4</span><span class="tk-cm"> * <span class="tk-tag">@stack</span>Vue.js · React · TypeScript</span></div>
+    <div class="cl"><span class="ln">5</span><span class="tk-cm"> * <span class="tk-tag">@location</span>  España</span></div>
+    <div class="cl"><span class="ln">6</span><span class="tk-cm"> */</span></div>
+
+    <!-- Empty line -->
+    <div class="cl"><span class="ln">7</span></div>
+
+    <!-- Interface definition -->
+    <div class="cl"><span class="ln">8</span><span class="tk-kw">interface </span><span class="tk-ty">Developer</span><span class="tk-punct"> &#123;</span></div>
+    <div class="cl"><span class="ln">9</span><span class="i1"><span class="tk-prop">name</span><span class="tk-punct">: </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+    <div class="cl"><span class="ln">10</span><span class="i1"><span class="tk-prop">role</span><span class="tk-punct">: </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+    <div class="cl"><span class="ln">11</span><span class="i1"><span class="tk-prop">about</span><span class="tk-punct">: </span><span class="tk-ty">string</span><span class="tk-punct">;</span></span></div>
+    <div class="cl"><span class="ln">12</span><span class="tk-punct">&#125;</span></div>
+
+    <!-- Empty line -->
+    <div class="cl"><span class="ln">13</span></div>
+
+    <!-- Const declaration -->
+    <div class="cl"><span class="ln">14</span><span class="tk-kw">const </span><span class="tk-var">developer</span><span class="tk-punct">: </span><span class="tk-ty">Developer</span><span class="tk-punct"> = &#123;</span></div>
+    <div class="cl"><span class="ln">15</span><span class="i1"><span class="tk-prop">name</span><span class="tk-punct">:  </span><span class="tk-str">"{data.name}"</span><span class="tk-punct">,</span></span></div>
+    <div class="cl"><span class="ln">16</span><span class="i1"><span class="tk-prop">role</span><span class="tk-punct">:  </span><span class="tk-str">"{data.profession}"</span><span class="tk-cursor"></span><span class="tk-punct">,</span></span></div>
+    <div class="cl about-line"><span class="ln">17</span><span class="i1"><span class="tk-prop">about</span><span class="tk-punct">: </span><span class="tk-tmpl">`{data.about}`</span><span class="tk-punct">,</span></span></div>
+    <div class="cl"><span class="ln">18</span><span class="tk-punct">&#125;;</span></div>
+
+    <!-- Empty line -->
+    <div class="cl"><span class="ln">19</span></div>
+
+    <!-- Export -->
+    <div class="cl"><span class="ln">20</span><span class="tk-kw">export default </span><span class="tk-var">developer</span><span class="tk-punct">;</span></div>
+    <div class="cl"><span class="ln">21</span></div>
+
   </div>
-</header>
+</section>
 
 <style>
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-  }
+.editor-section {
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--space-lg);
+}
 
-  .name {
-    font-family: var(--font-family-display);
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--accent-primary);
-    margin-bottom: var(--space-xs);
-    letter-spacing: -0.02em;
-  }
+.code-block {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+}
 
-  .profession {
-    font-family: var(--font-family-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: var(--font-weight-black);
-    line-height: 1.1;
-    margin-bottom: var(--space-md);
-    background: linear-gradient(to right, var(--text-main), var(--text-muted));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .about {
-    font-size: var(--font-size-lg);
-    line-height: 1.6;
-    color: var(--text-muted);
-    max-width: 65ch;
-  }
+/* Wrap the long about line */
+.about-line {
+  white-space: normal;
+  word-break: break-word;
+  align-items: flex-start;
+}
+.about-line .ln {
+  margin-top: 0;
+}
 </style>

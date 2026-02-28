@@ -9,10 +9,14 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "pdf": "astro build && node scripts/generate-pdf.mjs"
   },
   "dependencies": {
     "astro": "^3.0.8"
+  },
+  "devDependencies": {
+    "puppeteer": "^22.15.0"
   },
   "repository": {
     "type": "git",
