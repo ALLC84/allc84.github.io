@@ -5,8 +5,11 @@ export default {
   name: 'Alejandro LLorente',
   profession: 'Frontend Engineer',
   status: 'open',
-  about:
-    'Frontend Engineer con más de 8 años de experiencia, especializado en el desarrollo de arquitecturas escalables y sistemas de diseño de alto rendimiento. Mi enfoque se centra en construir software de calidad, mantenible y centrado en el usuario.Actualmente, formo parte del equipo encargado de la estrategia frontend y el **Design System** de **Ayvens España** (antes ALD Automotive), donde contribuyo a la cohesión técnica y visual de más de 15 aplicaciones críticas del ecosistema digital de la compañía.Como desarrollador, me apasiona la arquitectura limpia y los sistemas reactivos. En mi tiempo personal, exploro soluciones de producto como **Kunet** (accesibilidad basada en programación reactiva) y **Engram Nexus** (visualización de conocimiento técnico para desarrolladores).',
+  about: `Frontend Engineer con más de 6 años de experiencia en el desarrollo de aplicaciones web, especializado en arquitecturas escalables, sistemas de diseño y construcción de software mantenible.
+
+Actualmente, formo parte del equipo responsable de la estrategia frontend y el Design System de Ayvens España (anteriormente ALD Automotive), contribuyendo a la coherencia técnica, la reutilización de componentes y la evolución de más de 15 aplicaciones del ecosistema digital de la compañía.
+
+Me interesa especialmente la arquitectura de software, los sistemas reactivos y el diseño de soluciones que equilibren calidad técnica, escalabilidad y necesidades de producto. También desarrollo proyectos personales como Kunet, donde exploro enfoques de accesibilidad mediante programación reactiva.`,
   image: imageAvatar,
   mail: {
     email: 'alejandrollorente.dev@gmail.com',
